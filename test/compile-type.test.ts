@@ -8,6 +8,7 @@ import compileNumeric from '../src/compile-type/compile-numeric';
 import compileObject from '../src/compile-type/compile-object';
 import compileString from '../src/compile-type/compile-string';
 import compileTimestamp from '../src/compile-type/compile-timestamp';
+import compileTimestampOrNull from '../src/compile-type/compile-timestamp-or-null';
 import compileBytes from '../src/compile-type/compile-bytes';
 import compileLatLng from '../src/compile-type/compile-lat-lng';
 import compilePath from '../src/compile-type/compile-path';
@@ -20,6 +21,15 @@ describe('type compilers', () => {
         definitions: { Timestamp: {}},
         $ref: '#/definitions/Timestamp'
       }, 'ref'), '(ref is timestamp)');
+    });
+  });
+
+  describe('firestore.timestamp_or_null', () => {
+    it('compiles basic schema', () => {
+      assert.equal(compileTimestampOrNull({
+        definitions: { Timestamp: {}, TimestampOrNull: {} },
+        $ref: '#/definitions/TimestampOrNull'
+      }, 'ref'), '(ref is timestamp)||(ref==null)');
     });
   });
 
